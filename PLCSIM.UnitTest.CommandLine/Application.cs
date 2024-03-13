@@ -9,7 +9,7 @@ namespace PLCSIM.UnitTest.CommandLine
 {
     internal class Application
     {
-        private const string PLCSIM_CMDOPTION = "v5.0";
+        private const string PLCSIM_CMDOPTION = "v6.0";
         private static IApplicationLogger logger = ApplicationContext.Get<IApplicationLogger>();
 
         private IList<string> directories = new List<string>();

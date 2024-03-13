@@ -18,7 +18,7 @@ namespace PLCSIM.UnitTest.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private const string PLCSIM_CMDOPTION = "v5.0";
+        private const string PLCSIM_CMDOPTION = "v6.0";
 
         protected IApplicationLogger logger = Context.Get<IApplicationLogger>();
 

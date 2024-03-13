@@ -149,6 +149,7 @@ PLCSIM.UnitTest.CommandLine.exe whitelist -v <listofversions>
 ### PLCSIM Advanced plugins
   
 - API v5.0 (see project "Plugin Projects/PlcSimAdvanced.V5_0")
+- API v6.0 (see project "Plugin Projects/PlcSimAdvanced.V6_0")
 
 ### TIA Openess plugins
   
