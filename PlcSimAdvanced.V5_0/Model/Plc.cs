@@ -518,8 +518,9 @@ namespace PlcSimAdvanced.V5_0.Model
 
         private void DoOnConfigurationChanged(ERuntimeConfigChanged in_RuntimeConfigChanged, uint in_Param1, uint in_Param2, int in_Param3)
         {
-            logger.Verbose($"{Name}: Configuration changed (Param1={in_Param1}, Param1={in_Param3}, Param3={in_Param3})");
-            UpdateTags();
+            logger.Verbose($"{Name}: Configuration changed ({in_RuntimeConfigChanged}, Param1={in_Param1}, Param1={in_Param3}, Param3={in_Param3})");
+            if (in_RuntimeConfigChanged != ERuntimeConfigChanged.InstanceUnregistered)
+                UpdateTags();
         }
 
         private void DoOnSoftwareConfigurationChanged(IInstance instance, SOnSoftwareConfigChangedParameter event_param)
