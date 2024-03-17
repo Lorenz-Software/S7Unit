@@ -8,6 +8,10 @@ namespace PlcSimAdvanced.Model
 {
     public class TestSuite
     {
+        // BUG: Times not displayed properly
+        // BUG: Unfinished TestSuite shows up as OK
+        // BUG: Unfinished TestSuites occur (probably due to sequence of events)
+
         public static readonly string START = "START";
         public static readonly string FINISHED = "DONE";
 

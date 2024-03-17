@@ -8,6 +8,8 @@ namespace PlcSimAdvanced.Model
 {
     public class TestSuiteCollection
     {
+        // BUG: Times not displayed properly
+
         public static readonly string START = "START";
         public static readonly string FINISHED = "DONE";
 
