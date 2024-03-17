@@ -1,5 +1,6 @@
 ﻿using PlcSimAdvanced.Model;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
@@ -11,6 +12,7 @@ namespace PlcSimAdvanced.Utilities
         private Stream stream;
         private string prefix = null;
         private string ns = null;
+        private static IFormatProvider formatProvider = new CultureInfo("en-US");
 
         public TestSuiteCollectionXmlWriter(Stream stream)
         {
@@ -34,12 +36,12 @@ namespace PlcSimAdvanced.Utilities
         {
             await writer.WriteStartElementAsync(prefix, "testsuites", ns);
 
-            await writer.WriteAttributeStringAsync(prefix, "timestamp", ns, suiteCollection.EndTime.ToString("s"));
-            await writer.WriteAttributeStringAsync(prefix, "time", ns, suiteCollection.Duration.TotalSeconds.ToString());
-            await writer.WriteAttributeStringAsync(prefix, "tests", ns, suiteCollection.TestCount.ToString());
-            await writer.WriteAttributeStringAsync(prefix, "failures", ns, suiteCollection.Failed.ToString());
-            await writer.WriteAttributeStringAsync(prefix, "errors", ns, suiteCollection.Errors.ToString());
-            await writer.WriteAttributeStringAsync(prefix, "skipped", ns, suiteCollection.Skipped.ToString());
+            await writer.WriteAttributeStringAsync(prefix, "timestamp", ns, suiteCollection.EndTime.ToString("s", formatProvider));
+            await writer.WriteAttributeStringAsync(prefix, "time", ns, suiteCollection.Duration.TotalSeconds.ToString(formatProvider));
+            await writer.WriteAttributeStringAsync(prefix, "tests", ns, suiteCollection.TestCount.ToString(formatProvider));
+            await writer.WriteAttributeStringAsync(prefix, "failures", ns, suiteCollection.Failed.ToString(formatProvider));
+            await writer.WriteAttributeStringAsync(prefix, "errors", ns, suiteCollection.Errors.ToString(formatProvider));
+            await writer.WriteAttributeStringAsync(prefix, "skipped", ns, suiteCollection.Skipped.ToString(formatProvider));
 
             foreach (var suite in suiteCollection.TestSuites)
                 await writeTestSuite(writer, suite);
@@ -52,12 +54,12 @@ namespace PlcSimAdvanced.Utilities
             await writer.WriteStartElementAsync(prefix, "testsuite", ns);
 
             await writer.WriteAttributeStringAsync(prefix, "name", ns, suite.Name);
-            await writer.WriteAttributeStringAsync(prefix, "timestamp", ns, suite.EndTime.ToString("s"));
-            await writer.WriteAttributeStringAsync(prefix, "time", ns, suite.Duration.TotalSeconds.ToString());
-            await writer.WriteAttributeStringAsync(prefix, "tests", ns, suite.TestCount.ToString());
-            await writer.WriteAttributeStringAsync(prefix, "failures", ns, suite.Failed.ToString());
-            await writer.WriteAttributeStringAsync(prefix, "errors", ns, suite.Errors.ToString());
-            await writer.WriteAttributeStringAsync(prefix, "skipped", ns, suite.Skipped.ToString());
+            await writer.WriteAttributeStringAsync(prefix, "timestamp", ns, suite.EndTime.ToString("s", formatProvider));
+            await writer.WriteAttributeStringAsync(prefix, "time", ns, suite.Duration.TotalSeconds.ToString(formatProvider));
+            await writer.WriteAttributeStringAsync(prefix, "tests", ns, suite.TestCount.ToString(formatProvider));
+            await writer.WriteAttributeStringAsync(prefix, "failures", ns, suite.Failed.ToString(formatProvider));
+            await writer.WriteAttributeStringAsync(prefix, "errors", ns, suite.Errors.ToString(formatProvider));
+            await writer.WriteAttributeStringAsync(prefix, "skipped", ns, suite.Skipped.ToString(formatProvider));
 
             foreach (var test in suite.Tests)
                 await writeTestCase(writer, suite.Name, test);
@@ -71,7 +73,7 @@ namespace PlcSimAdvanced.Utilities
 
             await writer.WriteAttributeStringAsync(prefix, "name", ns, test.Name);
             await writer.WriteAttributeStringAsync(prefix, "classname", ns, suiteName);
-            await writer.WriteAttributeStringAsync(prefix, "time", ns, test.Duration.TotalSeconds.ToString());
+            await writer.WriteAttributeStringAsync(prefix, "time", ns, test.Duration.TotalSeconds.ToString(formatProvider));
 
             if (test.HasError)
             {

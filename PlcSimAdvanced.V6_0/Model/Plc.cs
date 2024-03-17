@@ -6,46 +6,50 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PlcSimAdvanced.V5_0.Model
+namespace PlcSimAdvanced.V6_0.Model
 {
-    public class PlcSimInstanceV50 : IPlcSimInstance
+    public class PlcSimInstanceV60 : IPlcSimInstance
     {
         private static IApplicationLogger logger = Context.Get<IApplicationLogger>();
 
-        public static PlcSimInstanceV50 RetrievePlcInstance(uint index)
+        public static PlcSimInstanceV60 RetrievePlcInstance(uint index)
         {
             if (!SimulationRuntimeManager.IsInitialized)
                 throw new ArgumentNullException("SimulationRuntimeManager not initialized");
             if ((SimulationRuntimeManager.RegisteredInstanceInfo == null) || (SimulationRuntimeManager.RegisteredInstanceInfo.Length == 0))
                 throw new ArgumentNullException("No instance registered");
+
+            SimulationRuntimeManager.NetworkMode = ENetworkMode.Softbus;
+
             string instanceName = SimulationRuntimeManager.RegisteredInstanceInfo[index].Name;
-            PlcSimInstanceV50 plc = new PlcSimInstanceV50(instanceName);
+            PlcSimInstanceV60 plc = new PlcSimInstanceV60(instanceName);
             plc.instance = SimulationRuntimeManager.CreateInterface(instanceName);
             //plc.instance.IsAlwaysSendOnEndOfCycleEnabled = true;
-            plc.instance.CommunicationInterface = ECommunicationInterface.Softbus;
             plc.LogPlcInstance();
             plc.UpdateTags();
             plc.RegisterInstanceEventHandlers();
             return plc;
         }
 
-        public static PlcSimInstanceV50 RetrievePlcInstance(string name)
+        public static PlcSimInstanceV60 RetrievePlcInstance(string name)
         {
             if (!SimulationRuntimeManager.IsInitialized)
                 throw new ArgumentNullException("SimulationRuntimeManager not initialized");
             if ((SimulationRuntimeManager.RegisteredInstanceInfo == null) || (SimulationRuntimeManager.RegisteredInstanceInfo.Length == 0))
                 throw new ArgumentNullException("No instance registered");
-            PlcSimInstanceV50 plc = new PlcSimInstanceV50(name);
+
+            SimulationRuntimeManager.NetworkMode = ENetworkMode.Softbus;
+
+            PlcSimInstanceV60 plc = new PlcSimInstanceV60(name);
             plc.instance = SimulationRuntimeManager.CreateInterface(name);
             //plc.instance.IsAlwaysSendOnEndOfCycleEnabled = true;
-            plc.instance.CommunicationInterface = ECommunicationInterface.Softbus;
             plc.LogPlcInstance();
             plc.UpdateTags();
             plc.RegisterInstanceEventHandlers();
             return plc;
         }
 
-        public static PlcSimInstanceV50 CreatePlcInstance(string name, uint timeout = 0)
+        public static PlcSimInstanceV60 CreatePlcInstance(string name, uint timeout = 0)
         {
             if (!SimulationRuntimeManager.IsInitialized)
                 throw new InvalidOperationException("SimulationRuntimeManager not initialized");
@@ -53,7 +57,10 @@ namespace PlcSimAdvanced.V5_0.Model
                 throw new InvalidOperationException("No registered instance info retrieved");
             if (SimulationRuntimeManager.RegisteredInstanceInfo.Length > 0)
                 throw new InvalidOperationException("Already an instance registered");
-            PlcSimInstanceV50 plc = new PlcSimInstanceV50(name);
+
+            SimulationRuntimeManager.NetworkMode = ENetworkMode.Softbus;
+
+            PlcSimInstanceV60 plc = new PlcSimInstanceV60(name);
             logger.Debug($"Registering PLCSIM instance...");
             var plcType = ECPUType.CPU1500_Unspecified;
             plc.instance = SimulationRuntimeManager.RegisterInstance(plcType, name);
@@ -64,7 +71,6 @@ namespace PlcSimAdvanced.V5_0.Model
 
             plc.LogPlcInstance();
 
-            plc.instance.CommunicationInterface = ECommunicationInterface.Softbus;
             logger.Info($"Communication via interface: {plc.instance.CommunicationInterface}");
 
             logger.Debug($"Power on PLCSIM instance...");
@@ -90,10 +96,10 @@ namespace PlcSimAdvanced.V5_0.Model
             //if (plc.ID < null)
             //    throw new ArgumentNullException("PLC is NULL");
 
-            if (!(plc is PlcSimInstanceV50))
-                throw new ArgumentException("Parameter plc is not of type PlcSimAdvanced.V5_0.Model.PLC");
+            if (!(plc is PlcSimInstanceV60))
+                throw new ArgumentException("Parameter plc is not of type PlcSimAdvanced.V6_0.Model.PLC");
 
-            var thisPlc = plc as PlcSimInstanceV50;
+            var thisPlc = plc as PlcSimInstanceV60;
             if (thisPlc.instance == null)
                 throw new InvalidOperationException("Instance is NULL");
 
@@ -171,7 +177,7 @@ namespace PlcSimAdvanced.V5_0.Model
         //    return plc;
         //}
 
-        ~PlcSimInstanceV50()
+        ~PlcSimInstanceV60()
         {
             Dispose();
         }
@@ -205,7 +211,7 @@ namespace PlcSimAdvanced.V5_0.Model
             return Constants.ALLOWEDDATATYPES.Contains(datatype);
         }
 
-        private PlcSimInstanceV50(string instanceName)
+        private PlcSimInstanceV60(string instanceName)
         {
             if (!SimulationRuntimeManager.IsRuntimeManagerAvailable)
                 throw new InvalidOperationException("Runtime manager not available");
