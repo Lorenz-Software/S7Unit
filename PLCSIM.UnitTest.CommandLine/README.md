@@ -41,6 +41,7 @@ PLCSIM.UnitTest.CommandLine.exe run -v <tiaversion> -f <projectfile> -p <plcname
   * V16
   * V17
   * V18
+  * V19
 > [!NOTE]
 > Listing plugins displays the command line option for each plugin`
 
@@ -105,6 +106,7 @@ PLCSIM.UnitTest.CommandLine.exe whitelist -v <listofversions>
   * V16
   * V17
   * V18
+  * V19
 > [!NOTE]
 > Listing plugins displays the command line option for each plugin`
 ---
@@ -156,6 +158,7 @@ PLCSIM.UnitTest.CommandLine.exe whitelist -v <listofversions>
 - TIA Portal v16 (see project "Plugin Projects/TiaOpeness.V16")
 - TIA Portal v17 (see project "Plugin Projects/TiaOpeness.V17")
 - TIA Portal v18 (see project "Plugin Projects/TiaOpeness.V18")
+- TIA Portal v19 (see project "Plugin Projects/TiaOpeness.V19")
 
 ## Implementation Details
 

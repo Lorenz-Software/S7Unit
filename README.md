@@ -19,6 +19,7 @@ Plugin framework to support different versions of TIA Openess and PLCSIM Advance
     - v16
     - v17
     - v18
+    - v19
 - TIA Portal unit test library for communication with unit test runner
 
 ## Projects
@@ -33,6 +34,7 @@ Plugin framework to support different versions of TIA Openess and PLCSIM Advance
     - TiaOpeness.V16: Plugin for TIA Openess V16
     - TiaOpeness.V17: Plugin for TIA Openess V17
     - TiaOpeness.V18: Plugin for TIA Openess V18
+    - TiaOpeness.V19: Plugin for TIA Openess V19
 - PLCSIM.UnitTest: Desktop application for testing unit test communication with PLCSIM Advanced instance
 - PLCSIM.UnitTest.CommandLine: Unit test commandline runner (see [README](PLCSIM.UnitTest.CommandLine/README.md))
 
